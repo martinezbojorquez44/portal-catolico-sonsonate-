@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for security
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'martinez.bojorquez44@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+
+    // Admins registry: only admins can read; initial admin bootstrap protected by email
+    match /admins/{userId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin() || (isAuthenticated() && request.auth.uid == userId && request.auth.token.email == 'martinez.bojorquez44@gmail.com');
+    }
+
+    // User profiles & subcollections
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+
+      match /intentions/{intentionId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+
+      match /quizProgress/{progressId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // Public Catholic Content - Public Read, Admin-Only Write
+    match /diocese_content/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /news/{newsId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /mass_schedules/{scheduleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /saints/{saintId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /advocations/{advocationId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /prayers/{prayerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /quiz_questions/{questionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /galleries/{galleryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

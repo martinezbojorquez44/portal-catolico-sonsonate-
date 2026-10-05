@@ -1,0 +1,6 @@
+{
+  "name": "Diócesis de Sonsonate — Portal Católico de Evangelización",
+  "description": "Plataforma oficial de evangelización católica de la Diócesis de Sonsonate, El Salvador. Jesucristo, Santísima Trinidad, Virgen María, Santo Rosario, Santos, Evangelio del día, Catequesis y Asistente Católico.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,332 @@
+{
+  "entities": {
+    "AdminRecord": {
+      "title": "Registro de Administrador Autorizado",
+      "description": "Documento que certifica el rol administrativo exclusivo en la Diócesis de Sonsonate.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID de Firebase Authentication del administrador."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Correo electrónico verificado del administrador."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"],
+          "description": "Rol de privilegios administrativos."
+        },
+        "grantedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha y hora en que se concedió el acceso administrativo."
+        }
+      },
+      "required": ["userId", "email", "role"]
+    },
+    "UserProfile": {
+      "title": "Perfil de Usuario Católico",
+      "description": "Datos del perfil del feligrés registrado en la Diócesis de Sonsonate.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID de autenticación de Firebase del usuario."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nombre completo del usuario."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Correo electrónico del usuario."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"],
+          "description": "Rol del usuario en el sistema."
+        },
+        "parish": {
+          "type": "string",
+          "description": "Parroquia o comunidad a la que asiste en Sonsonate."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha y hora de registro."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha y hora de última actualización."
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "UserPrayerIntention": {
+      "title": "Intención de Oración del Usuario",
+      "description": "Petición o intención de oración guardada por el feligrés.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID del feligrés que registró la intención."
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre de la persona o familia encomendada."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Salud", "Familia", "Difuntos", "Vocaciones", "Acción de gracias", "Conversión"],
+          "description": "Categoría de la intención de oración."
+        },
+        "intention": {
+          "type": "string",
+          "description": "Texto detallado de la intención o acción de gracias."
+        },
+        "date": {
+          "type": "string",
+          "description": "Fecha en que se registró la intención."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Marca de tiempo de creación."
+        }
+      },
+      "required": ["userId", "category", "intention"]
+    },
+    "UserQuizProgress": {
+      "title": "Progreso de Quiz Católico",
+      "description": "Historial de puntuación y participación en los quizzes de la fe.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID del usuario."
+        },
+        "quizzesTaken": {
+          "type": "number",
+          "description": "Total de quizzes completados."
+        },
+        "highestScore": {
+          "type": "number",
+          "description": "Mayor puntuación alcanzada."
+        },
+        "lastScore": {
+          "type": "number",
+          "description": "Puntuación en el último quiz."
+        },
+        "totalQuestionsAnswered": {
+          "type": "number",
+          "description": "Total de preguntas respondidas."
+        },
+        "totalCorrectAnswers": {
+          "type": "number",
+          "description": "Total de respuestas correctas."
+        },
+        "lastQuizDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Fecha del último quiz realizado."
+        }
+      },
+      "required": ["userId"]
+    },
+    "NewsItem": {
+      "title": "Noticia Diocesana",
+      "description": "Artículo de noticias eclesiales de la Diócesis de Sonsonate.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "summary": { "type": "string" },
+        "content": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "summary", "content"]
+    },
+    "EventItem": {
+      "title": "Evento Parroquial o Diocesano",
+      "description": "Actividades pastorales, procesiones, peregrinaciones y retiros.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "location": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "date", "description"]
+    },
+    "MassScheduleItem": {
+      "title": "Horario de Santa Misa",
+      "description": "Horarios de Misas y confesiones por parroquia.",
+      "type": "object",
+      "properties": {
+        "parish": { "type": "string" },
+        "location": { "type": "string" },
+        "priest": { "type": "string" },
+        "weekdays": { "type": "string" },
+        "saturdays": { "type": "string" },
+        "sundays": { "type": "string" },
+        "confessions": { "type": "string" },
+        "phone": { "type": "string" }
+      },
+      "required": ["parish", "location", "sundays"]
+    },
+    "SaintItem": {
+      "title": "Santo Católico",
+      "description": "Ficha hagiográfica de un santo de la Iglesia.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "feastDay": { "type": "string" },
+        "feastDayDisplay": { "type": "string" },
+        "category": { "type": "string" },
+        "countryOfOrigin": { "type": "string" },
+        "patronage": { "type": "string" },
+        "century": { "type": "string" },
+        "image": { "type": "string" },
+        "biography": { "type": "string" },
+        "prayer": { "type": "string" }
+      },
+      "required": ["name", "feastDayDisplay", "biography"]
+    },
+    "AdvocationItem": {
+      "title": "Advocación Mariana",
+      "description": "Advocación de la Santísima Virgen María.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "country": { "type": "string" },
+        "feastDay": { "type": "string" },
+        "image": { "type": "string" },
+        "history": { "type": "string" },
+        "significance": { "type": "string" },
+        "devotion": { "type": "string" },
+        "prayer": { "type": "string" }
+      },
+      "required": ["name", "feastDay", "history"]
+    },
+    "PrayerItem": {
+      "title": "Oración Católica",
+      "description": "Oración tradicional de la fe católica.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "text": { "type": "string" }
+      },
+      "required": ["title", "text"]
+    },
+    "QuizQuestionItem": {
+      "title": "Pregunta de Quiz",
+      "description": "Pregunta doctrinal para el Quiz Católico del Día.",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "question": { "type": "string" },
+        "correctIndex": { "type": "number" },
+        "explanation": { "type": "string" }
+      },
+      "required": ["category", "question", "correctIndex", "explanation"]
+    },
+    "GalleryItem": {
+      "title": "Galería de Fotos o Video",
+      "description": "Registro audiovisual de procesiones y celebraciones diocesanas.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "imageUrl"]
+    },
+    "DioceseContent": {
+      "title": "Contenido Oficial de la Diócesis",
+      "description": "Información oficial de la Catedral de la Santísima Trinidad de Sonsonate, Nuestra Señora de Candelaria y del Obispo.",
+      "type": "object",
+      "properties": {
+        "cathedralName": { "type": "string" },
+        "cathedralHistory": { "type": "string" },
+        "cathedralImage": { "type": "string" },
+        "patronName": { "type": "string" },
+        "patronHistory": { "type": "string" },
+        "patronImage": { "type": "string" },
+        "bishopName": { "type": "string" },
+        "bishopMotto": { "type": "string" },
+        "bishopBiography": { "type": "string" },
+        "bishopMessage": { "type": "string" },
+        "bishopImage": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["cathedralName", "patronName", "bishopName"]
+    }
+  },
+  "firestore": {
+    "/admins/{userId}": {
+      "schema": { "$ref": "AdminRecord" },
+      "description": "Registro de administradores autorizados con privilegios en la Diócesis."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "UserProfile" },
+      "description": "Perfil privado de cada usuario registrado."
+    },
+    "/users/{userId}/intentions/{intentionId}": {
+      "schema": { "$ref": "UserPrayerIntention" },
+      "description": "Intenciones de oración privadas guardadas por el usuario."
+    },
+    "/users/{userId}/quizProgress/{progressId}": {
+      "schema": { "$ref": "UserQuizProgress" },
+      "description": "Registro de progreso y estadísticas de quizzes del usuario."
+    },
+    "/diocese_content/{contentId}": {
+      "schema": { "$ref": "DioceseContent" },
+      "description": "Información institucional editable de la Diócesis, Catedral de la Santísima Trinidad y Patrona Candelaria."
+    },
+    "/news/{newsId}": {
+      "schema": { "$ref": "NewsItem" },
+      "description": "Noticias y boletines eclesiásticos."
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "EventItem" },
+      "description": "Eventos, procesiones y retiros diocesanos."
+    },
+    "/mass_schedules/{scheduleId}": {
+      "schema": { "$ref": "MassScheduleItem" },
+      "description": "Horarios de Santa Misa por parroquia."
+    },
+    "/saints/{saintId}": {
+      "schema": { "$ref": "SaintItem" },
+      "description": "Biblioteca ampliable de Santos católicos."
+    },
+    "/advocations/{advocationId}": {
+      "schema": { "$ref": "AdvocationItem" },
+      "description": "Catálogo de Advocaciones Marianas."
+    },
+    "/prayers/{prayerId}": {
+      "schema": { "$ref": "PrayerItem" },
+      "description": "Biblioteca de Oraciones católicas."
+    },
+    "/quiz_questions/{questionId}": {
+      "schema": { "$ref": "QuizQuestionItem" },
+      "description": "Banco de preguntas para el Quiz Católico del Día."
+    },
+    "/galleries/{galleryId}": {
+      "schema": { "$ref": "GalleryItem" },
+      "description": "Galería fotográfica y audiovisual diocesana."
+    }
+  }
+}
